@@ -2,7 +2,11 @@ class ResultsController < ApplicationController
   before_action :allow_cors
 
   def index
-    @news_result = News.new(params).aggregate
+    begin
+      @news_result = News.new(params).aggregate
+    rescue Elasticsearch::Transport::Transport::Errors::BadRequest => exception
+      @news_result = {error: exception}
+    end
   end
 
   private
