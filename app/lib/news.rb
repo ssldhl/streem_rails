@@ -1,22 +1,22 @@
 class News
   attr_reader :client, :filters, :interval
 
-  # query, after and before can be empty. interval defaults to 1d if not present
-  def initialize(query, after, before, interval)
+  # In params query, after and before can be empty. interval defaults to 1d if not present
+  def initialize(params)
     url = "https://#{Rails.application.credentials.elasticsearch[:username]}:"+
       "#{Rails.application.credentials.elasticsearch[:password]}@#{Rails.application.credentials.elasticsearch[:url]}"
     query_filter = nil
     date_filter = nil
 
-    if query.present?
+    if params[:query].present?
       query_filter = {
         match: {
-          text: query
+          text: params[:query]
         }
       }
     end
 
-    if after.present? || before.present?
+    if params[:after].present? || params[:before].present?
       date_filter = {
         range: {
           timestamp: {
@@ -24,17 +24,17 @@ class News
           }
         }
       }
-      if after.present?
-        date_filter[:range][:timestamp][:gte] = after
+      if params[:after].present?
+        date_filter[:range][:timestamp][:gte] = params[:after]
       end
-      if before.present?
-        date_filter[:range][:timestamp][:lte] = before
+      if params[:before].present?
+        date_filter[:range][:timestamp][:lte] = params[:before]
       end
     end
 
-    @client = Elasticsearch::Client.new url: url
+    @client = Elasticsearch::Client.new url: url, log: false
     @filters = [query_filter, date_filter].compact
-    @interval = interval.present? ? interval : '1d'
+    @interval = params[:interval].present? ? params[:interval] : '1d'
   end
 
   def aggregate
