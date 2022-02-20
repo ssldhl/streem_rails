@@ -46,5 +46,6 @@ group :development do
   # gem "spring"
 end
 
+gem "elasticsearch", "~> 7.0"
 
-gem "elasticsearch-ruby", "~> 0.0.4"
+gem "typhoeus", "~> 1.4"
