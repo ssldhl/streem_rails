@@ -5,7 +5,7 @@ class ResultsController < ApplicationController
     begin
       @news_result = News.new(params).aggregate
     rescue Elasticsearch::Transport::Transport::Errors::BadRequest => exception
-      @news_result = {error: exception}
+      render json: {error: exception.message}, status: :unprocessable_entity
     end
   end
 
