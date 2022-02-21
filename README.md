@@ -1,24 +1,15 @@
-# README
+# Streem
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+To get the application up and running.
 
-Things you may want to cover:
+* Copy `master.key` to `config/` directory
 
-* Ruby version
+* Install Ruby version - `ruby-3.0.2` with gemset `streem` as specified in `.ruby-version` and `.ruby-gemset` files
 
-* System dependencies
+* Run `bundle install`
 
-* Configuration
+* Configure postgres database with username - `pguser` and password `root`
 
-* Database creation
+* Run `rails db:setup db:migrate`
 
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+* Finally `rails s -p 4000`

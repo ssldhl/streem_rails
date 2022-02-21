@@ -11,6 +11,7 @@ class ResultsController < ApplicationController
 
   private
 
+  # Allow CORS from the frontend app; use rack-cors gem in real app
   def allow_cors
     headers['Access-Control-Allow-Origin'] = '*'
   end
